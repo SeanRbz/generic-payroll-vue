@@ -2,7 +2,7 @@
 
 **Generic Payroll** is a project for exploring how to build a payroll and DTR (Daily Time Record) checking system. It's a local Vue 3 single-page app built around a **Payroll Generator → Batch Generator** screen, with **Email Token Configuration** and **Recipient Directory & Staff List** modals, a cycle dashboard and an employee masterlist.
 
-> **Status: early and mostly front-end.** There is no spreadsheet parsing and no payroll dispatch yet. The one live feature is **Gmail sign-in**: sign in with Google in the Email Token modal and send a real test email (see [Gmail sign-in setup](#gmail-sign-in-setup)). The pages show demo ("test") data from the fixtures in `src/models/*/data`; clear a fixture to see that table's empty state. Nothing is deployed; the app only runs locally.
+> **Status: early and mostly front-end.** There is no spreadsheet parsing and no payroll dispatch yet. The one live feature is **Gmail sign-in**: sign in with Google in the Email Token modal and send a real test email (see [Gmail sign-in setup](#gmail-sign-in-setup)). The pages show demo ("test") data from the fixtures in `src/models/*/data`; clear a fixture to see that table's empty state. A demo build runs on Vercel at <https://generic-payroll-vue.vercel.app> (see [Deploy on Vercel](#deploy-on-vercel)); otherwise the app runs locally.
 
 ## What's in it
 
@@ -104,6 +104,15 @@ docker compose down                    # stop and remove
 - **No TLS is included.** For anything beyond localhost, put it behind a TLS-terminating proxy. Google also requires HTTPS for non-localhost OAuth origins.
 - No Content-Security-Policy is set yet. Add one only after testing it against the real Google sign-in popup, which needs `accounts.google.com`, `www.googleapis.com` and `gmail.googleapis.com`.
 
+### Deploy on Vercel
+
+Vercel detects Vite, runs `npm run build` and serves `dist/`. `vercel.json` gives it the same serving rules as `nginx.conf`:
+
+- **History-mode fallback.** Routes like `/cycle-overview` exist only in the browser, so without a rewrite Vercel answers `404 NOT_FOUND` when you open or refresh one (`/` still works because `index.html` is a real file). The rewrite serves `index.html` for every path that is not a real file. `/assets/` is left out, so a missing chunk still returns 404 instead of the app shell.
+- **Headers.** The same `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options` as nginx, and a one-year immutable cache for the fingerprinted `/assets/`. No CSP yet, for the reason given above. Don't add `Cross-Origin-Opener-Policy: same-origin`: it cuts the Google sign-in popup off from the app.
+- **Settings are build-time.** Set `VITE_*` values under _Project → Settings → Environment Variables_ and redeploy; never put secrets there.
+- **Gmail sign-in needs the Vercel origin.** Add `https://generic-payroll-vue.vercel.app` to the OAuth client's _Authorized JavaScript origins_. Google allows no wildcards, so register only the production domain (and one named preview domain if you need it) rather than every preview URL.
+
 ## Project structure
 
 The code follows **MVVM**: models hold the domain, ViewModels turn it into page state and commands, and views render it.
@@ -140,6 +149,7 @@ src/
   assets/styles/main.css     Tailwind import, fonts, design tokens (@theme)
 env/                         .env.example (tracked), .env.development, .env.local (git-ignored)
 Dockerfile, nginx.conf, docker-compose.yml, .dockerignore   container build and static serving
+vercel.json                  Vercel history-mode fallback
 ```
 
 The layers only depend downwards: **views → viewmodels → models**.
