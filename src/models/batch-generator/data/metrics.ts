@@ -1,0 +1,52 @@
+import type { Metric } from '@/types/ui'
+
+export const metrics: readonly Metric[] = [
+  {
+    id: 'headcount',
+    label: 'Total Headcount',
+    icon: 'badge',
+    accent: 'primary',
+    iconTone: 'primary',
+    value: 148,
+    format: 'count',
+    note: '100% matched',
+    footer: [{ text: 'Regular: 112' }, { text: 'COS/Job Order: 36' }],
+    footerSeparator: true,
+  },
+  {
+    id: 'hours',
+    label: 'Accumulated Hours',
+    icon: 'schedule',
+    accent: 'primary-container',
+    iconTone: 'primary',
+    value: 12480.5,
+    format: 'hours',
+    unit: 'hrs',
+    footer: [
+      { text: '+342.0 OT hrs', tone: 'positive' },
+      { text: '-18.5 Tardy hrs', tone: 'negative' },
+    ],
+  },
+  {
+    id: 'deductions',
+    label: 'Total Deductions',
+    icon: 'account_balance_wallet',
+    accent: 'outline',
+    iconTone: 'neutral',
+    value: 1248310.2,
+    format: 'peso',
+    footer: [{ text: 'GSIS + PHIC: ₱812k' }, { text: 'BIR W/Tax: ₱436k' }],
+    footerSeparator: true,
+  },
+  {
+    id: 'net-disbursement',
+    label: 'Total Net Disbursement',
+    icon: 'price_check',
+    accent: 'secondary',
+    iconTone: 'success',
+    emphasized: true,
+    value: 4892450,
+    format: 'peso',
+    footer: [{ text: 'LBP Direct ADA', tone: 'strong' }, { text: 'Batch Ref: #DTR-25-05-A' }],
+  },
+]

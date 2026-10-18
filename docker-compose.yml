@@ -1,0 +1,32 @@
+# Build and serve the app locally:
+#   docker compose --env-file env/.env.local up --build
+# Without --env-file the defaults below are used (and Gmail sign-in stays off).
+# VITE_* values are compiled into the bundle at build time, so changing one
+# means rebuilding (`up --build`).
+name: generic-payroll
+
+services:
+  web:
+    image: generic-payroll-vue:latest
+    build:
+      context: .
+      args:
+        VITE_APP_TITLE: ${VITE_APP_TITLE:-}
+        VITE_APP_VERSION: ${VITE_APP_VERSION:-}
+        VITE_APP_STAGE: ${VITE_APP_STAGE:-}
+        VITE_ORG_NAME: ${VITE_ORG_NAME:-}
+        VITE_ORG_UNIT: ${VITE_ORG_UNIT:-}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+    # Localhost only. Google only accepts http://localhost (not a LAN address) as an
+    # OAuth origin, so register http://localhost:8080 in the Cloud Console.
+    ports:
+      - "127.0.0.1:8080:8080"
+    restart: unless-stopped
+    # Hardening: nothing in the container needs to write outside /tmp or gain privileges.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

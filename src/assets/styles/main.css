@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+@import '@fontsource/public-sans/400.css';
+@import '@fontsource/public-sans/500.css';
+@import '@fontsource/public-sans/600.css';
+@import '@fontsource/public-sans/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+@import 'material-symbols/outlined.css' layer(components);
+
+/*
+ * Design tokens for the whole app (colours, type, spacing, radii).
+ * Component classes such as `bg-surface-container-low` or `font-label-code` come from here.
+ */
+@theme {
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e6eeff;
+  --color-surface-container-high: #dde9ff;
+  --color-surface-container-highest: #d5e3fd;
+  --color-surface-variant: #d5e3fd;
+  --color-surface-dim: #ccdbf4;
+  --color-surface-bright: #f8f9ff;
+  --color-surface-tint: #2151da;
+  --color-surface: #f8f9ff;
+  --color-background: #f8f9ff;
+  --color-on-background: #0d1c2f;
+  --color-on-surface: #0d1c2f;
+  --color-on-surface-variant: #434655;
+  --color-inverse-surface: #233144;
+  --color-inverse-on-surface: #ebf1ff;
+  --color-inverse-primary: #b7c4ff;
+  --color-outline: #747686;
+  --color-outline-variant: #c4c5d7;
+
+  --color-primary: #0037b0;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1d4ed8;
+  --color-on-primary-container: #cad3ff;
+  --color-primary-fixed: #dce1ff;
+  --color-primary-fixed-dim: #b7c4ff;
+  --color-on-primary-fixed: #001551;
+  --color-on-primary-fixed-variant: #0039b5;
+
+  --color-secondary: #006d30;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #92f5a4;
+  --color-on-secondary-container: #007233;
+  --color-secondary-fixed: #95f8a7;
+  --color-secondary-fixed-dim: #79db8d;
+  --color-on-secondary-fixed: #00210a;
+  --color-on-secondary-fixed-variant: #005323;
+
+  --color-tertiary: #004e48;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #006861;
+  --color-on-tertiary-container: #8fe4da;
+  --color-tertiary-fixed: #9cf2e8;
+  --color-tertiary-fixed-dim: #80d5cb;
+  --color-on-tertiary-fixed: #00201d;
+  --color-on-tertiary-fixed-variant: #00504a;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --radius-sm: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 0.75rem;
+  --spacing-space-lg: 1.25rem;
+  --spacing-space-xl: 2rem;
+  --spacing-gutter: 1rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-margin: 1rem;
+  --spacing-margin-tablet: 1.5rem;
+  --spacing-margin-desktop: 2rem;
+  --spacing-header: 7.75rem;
+  --spacing-sidebar: 16rem;
+
+  --font-body-sm: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body-md: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body-lg: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-md: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-xl: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-label-strong: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-label-code: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-label-numeric: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-body-sm: 0.75rem;
+  --text-body-sm--line-height: 1rem;
+  --text-body-sm--font-weight: 400;
+  --text-body-md: 0.875rem;
+  --text-body-md--line-height: 1.25rem;
+  --text-body-md--font-weight: 400;
+  --text-body-lg: 1rem;
+  --text-body-lg--line-height: 1.5rem;
+  --text-body-lg--font-weight: 400;
+  --text-headline-md: 1.125rem;
+  --text-headline-md--line-height: 1.5rem;
+  --text-headline-md--font-weight: 600;
+  --text-headline-lg: 1.5rem;
+  --text-headline-lg--line-height: 2rem;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-xl: 2rem;
+  --text-headline-xl--line-height: 2.5rem;
+  --text-headline-xl--letter-spacing: -0.02em;
+  --text-headline-xl--font-weight: 700;
+  --text-label-strong: 0.75rem;
+  --text-label-strong--line-height: 1rem;
+  --text-label-strong--letter-spacing: 0.05em;
+  --text-label-strong--font-weight: 600;
+  --text-label-code: 0.75rem;
+  --text-label-code--line-height: 1rem;
+  --text-label-code--font-weight: 400;
+  --text-label-numeric: 0.875rem;
+  --text-label-numeric--line-height: 1.25rem;
+  --text-label-numeric--letter-spacing: -0.02em;
+  --text-label-numeric--font-weight: 500;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--color-outline-variant);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-background font-body-md text-body-md text-on-surface antialiased;
+    overscroll-behavior: none;
+  }
+}

@@ -1,0 +1,25 @@
+# Keep the build context small and free of local files.
+
+# Dependencies and outputs are rebuilt inside the image.
+node_modules
+dist
+coverage
+*.tsbuildinfo
+.eslintcache
+*.log
+
+# Local environment files never go into the build context (settings are passed as
+# build args instead), so a personal env/.env.local can't leak into an image layer.
+env
+
+# Not needed to build.
+.git
+.gitignore
+.claude
+.vscode
+.idea
+docs
+*.md
+Dockerfile
+docker-compose.yml
+.dockerignore
