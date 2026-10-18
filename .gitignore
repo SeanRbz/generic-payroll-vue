@@ -40,3 +40,6 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Vercel CLI project link
+.vercel
