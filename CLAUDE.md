@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-**Generic Payroll**: a project for exploring how to build a payroll and DTR (Daily Time Record) checking system. It is a local Vue 3 single-page app built around the *Payroll Generator → Batch Generator* screen, plus its two modals (**Email Token Configuration** and **Recipient Directory & Staff List**). Nothing is deployed; it only runs locally.
+**Generic Payroll**: a project for exploring how to build a payroll and DTR (Daily Time Record) checking system. It is a local Vue 3 single-page app built around the *Payroll Generator → Batch Generator* screen, plus its two modals (**Email Token Configuration** and **Recipient Directory & Staff List**). It runs locally, and a demo build is deployed on Vercel (see "Vercel" below).
 
 ## Scope: read this first
 
@@ -62,6 +62,12 @@ docker compose down
 - `.dockerignore` excludes `env/`, so local env files never enter the build context. Don't remove that line.
 - nginx locations use `expires` rather than `add_header` for caching, because `add_header` in a location silently drops the server-level security headers.
 - If you change anything under `docker-compose.yml`'s hardening (`read_only`, `cap_drop`), re-run the container and check `docker compose ps` shows `healthy`.
+
+### Vercel
+
+- Deployed at https://generic-payroll-vue.vercel.app. Vercel runs `npm run build` and serves `dist/`.
+- `vercel.json` mirrors `nginx.conf`. Its rewrite is the history-mode fallback: every path that isn't a real file goes to `/index.html`, except `/assets/`, so a missing chunk still 404s. Without it, opening or refreshing any route other than `/` returns Vercel's `404 NOT_FOUND`. Don't remove it, and keep the `assets/` exclusion. It also sets the same three security headers as nginx and a one-year immutable cache on `/assets/`. If you change the headers in one file, change the other too. Never add COOP `same-origin` (it breaks the Google sign-in popup); there is no CSP on either host yet.
+- `VITE_*` values go in the Vercel project's environment variables (build-time, public). The Vercel origin must be in the OAuth client's Authorized JavaScript origins for Gmail sign-in to work there. Register the production domain only, not every preview URL.
 
 ## Architecture
 
